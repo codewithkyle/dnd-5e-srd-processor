@@ -43,7 +43,7 @@ for (const spell of spells){
         damage: response?.damage?.damage_at_slot_level ?? null,
         school: response?.school?.name ?? null,
         classes: formatArray(response, "classes"),
-        subsclasses: formatArray(response, "subclasses"),
+        subclasses: formatArray(response, "subclasses"),
     };
 
     await writeFile(file, JSON.stringify(data) + "\n", { flag: "a" });
