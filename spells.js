@@ -60,23 +60,29 @@ function formatArray(response, key){
 }
 
 function formatDescription(response){
+    const IsHeading = new RegExp(/^(\#)/);
+    const IsTableRow = new RegExp(/(\|)$/);
+
     let output = "";
     if (response.desc?.length){
         for (const desc of response.desc){
-            output += desc;
-            output += "\n\n";
+            if (IsHeading.test(desc)){
+                output += `\n${desc}\n`;
+            }
+            else if (IsTableRow.test(desc)){
+                output += `${desc}\n`;
+            }
+            else {
+                output += `\n${desc}\n`;
+            }
         }
     }
     if (response.higher_level?.length){
         for (const desc of response.higher_level){
             output += desc;
-            output += "\n\n";
+            output += "\n";
         }
     }
     output = output.trim();
-    const matches = output.match(/\*{3}.*?\*{3}/g) || [];
-    for (const match of matches){
-        output = output.replace(match, `${match.replace(/\*/g, "")}\n`).trim();
-    }
     return output;
 }
