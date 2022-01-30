@@ -73,6 +73,10 @@ function formatDescription(response){
             output += "\n\n";
         }
     }
-    output = output.replace(/(\n\n)$/, "").trim();
+    output = output.trim();
+    const matches = output.match(/\*{3}.*?\*{3}/g) || [];
+    for (const match of matches){
+        output = output.replace(match, `${match.replace(/\*/g, "")}\n`).trim();
+    }
     return output;
 }
